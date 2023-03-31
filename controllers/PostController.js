@@ -40,7 +40,9 @@ export const getOne = async (req, resp) => {
     const postId = req.params.id;
     //Повертаємо стат'ю, та інкрементуємо перегляд
     const update = { $inc: { viewsCount: 1 } };
-    let doc = await Post.findByIdAndUpdate(postId, update);
+    let doc = await Post.findByIdAndUpdate(postId, update)
+      .populate("user")
+      .exec();
 
     resp.json(doc);
   } catch (error) {

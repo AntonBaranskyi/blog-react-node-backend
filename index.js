@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import mongoose from "mongoose";
 import checkAuth from "./utils/checkAuth.js";
 import { login, register, checkMe } from "./controllers/UserController.js";
@@ -38,7 +39,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+app.get("/", (req, resp) => {
+  resp.send("Hello!!");
+});
+
 app.use(express.json()); // навчили node читать json
+app.use(cors());
 
 app.post("/auth/login", loginValidator, login);
 app.post("/auth/register", registerValidator, register);
@@ -56,7 +62,7 @@ app.post("/uploads", upload.single("image"), (req, resp) => {
   });
 });
 
-app.listen(3000, (err) => {
+app.listen(4444, (err) => {
   if (err) {
     console.log(`Error: ${err}}`);
   }
